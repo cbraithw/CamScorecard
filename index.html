@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hole Tracker</title>
+
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#111111" />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="card">
+      <header class="header">
+        <div>
+          <h1>Hole <span id="holeNumber">1</span></h1>
+          <p class="sub">Quick stats (prototype)</p>
+        </div>
+        <button id="nextHoleBtn" class="btn">Next</button>
+      </header>
+
+      <section class="grid">
+        <label class="field">
+          <span>Par</span>
+          <input id="par" type="number" min="3" max="5" inputmode="numeric" />
+        </label>
+
+        <label class="field">
+          <span>Score</span>
+          <input id="score" type="number" min="1" max="15" inputmode="numeric" />
+        </label>
+
+        <label class="field">
+          <span>Putts</span>
+          <input id="putts" type="number" min="0" max="6" inputmode="numeric" />
+        </label>
+
+        <label class="field">
+          <span>Fairway</span>
+          <select id="fairway">
+            <option value="">—</option>
+            <option value="hit">Hit</option>
+            <option value="left">Miss L</option>
+            <option value="right">Miss R</option>
+            <option value="na">N/A</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>GIR</span>
+          <select id="gir">
+            <option value="">—</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="na">N/A</option>
+          </select>
+        </label>
+
+        <label class="field field-wide">
+          <span>Notes</span>
+          <input id="notes" type="text" placeholder="e.g., pulled tee shot, chunked approach" />
+        </label>
+      </section>
+
+      <footer class="footer">
+        <button id="saveBtn" class="btn primary">Save</button>
+        <span id="status" class="status"></span>
+      </footer>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

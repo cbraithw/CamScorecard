@@ -284,7 +284,7 @@ function wireSegButtons() {
 window.addEventListener("load", () => {
   // Service worker registration (keep your existing sw.js)
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
+    navigator.serviceWorker.register("./sw.js?v=2").catch(() => {});
   }
 
   // Stepper buttons (+/-)

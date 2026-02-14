@@ -41,6 +41,87 @@ body{
   align-items:flex-start;
 }
 
+.topCompact {
+  display: grid;
+  gap: 8px;
+}
+
+.topCompact .kicker {
+  font-size: 12px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 6px;
+}
+
+.line1 {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.leftLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+
+.rightLine {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.roundInline {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.roundToParInline {
+  font-weight: 900;
+  color: var(--muted);
+}
+
+.line2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.strong {
+  font-weight: 950;
+  color: var(--text);
+}
+
+.dot {
+  color: var(--muted);
+  margin: 0 2px;
+}
+
+/* Make header more compact */
+.topCompact .btn {
+  height: 40px;
+  border-radius: 14px;
+}
+
+/* On small screens, keep the right side from eating all space */
+@media (max-width: 420px) {
+  .line1 {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .rightLine {
+    justify-content: space-between;
+  }
+}
+
 .kicker{
   font-size:12px;
   letter-spacing:.12em;

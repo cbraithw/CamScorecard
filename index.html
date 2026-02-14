@@ -15,38 +15,49 @@
     <div class="container">
       <main class="card">
         <!-- Top: hole meta + round summary -->
-        <header class="top">
-          <div>
-            <div class="kicker">Hole</div>
+<header class="topCompact">
+  <!-- Line 1 -->
+  <div class="line1">
+    <div class="leftLine">
+      <span class="kicker">Hole</span>
+      <span class="strong" id="holeNumber">1</span>
 
-            <div class="titleRow">
-              <div class="holeNum" id="holeNumber">1</div>
+      <span class="dot">•</span>
+      <span class="muted">Par</span> <span class="strong" id="parValue">4</span>
 
-              <div class="parMeta">
-                Par <span id="parValue">4</span>
-                <span class="scorePill" id="holeToParPill">E</span>
-              </div>
-            </div>
+      <span class="dot">•</span>
+      <span class="strong" id="yardsValue">410</span><span class="muted">y</span>
 
-            <div class="chips">
-              <div class="chip"><span class="muted">Yards</span> <b id="yardsValue">410</b></div>
-              <div class="chip"><span class="muted">Hcp</span> <b id="hcpValue">7</b></div>
-              <div class="chip"><span class="muted">Prev</span> <b><span id="prevLow">—</span> / <span id="prevMed">—</span> / <span id="prevHigh">—</span></b></div>
-            </div>
-          </div>
+      <span class="dot">•</span>
+      <span class="muted">Hcp</span><span class="strong" id="hcpValue">7</span>
 
-          <div class="topBtns">
-            <div class="roundBox">
-              <div class="label">Round</div>
-              <div class="val">
-                <span id="roundTotal">0</span>
-              </div>
-              <div class="toPar" id="roundToPar">(E)</div>
-            </div>
+      <span class="dot">•</span>
+      <span class="muted">Hole</span>
+      <span class="scorePill" id="holeToParPill">E</span>
+    </div>
 
-            <button id="nextHoleBtn" class="btn">Next</button>
-          </div>
-        </header>
+    <div class="rightLine">
+      <div class="roundInline">
+        <span class="muted">Score</span>
+        <span class="strong" id="roundTotal">71</span>
+        <span class="roundToParInline" id="roundToPar">(+14)</span>
+      </div>
+      <button id="nextHoleBtn" class="btn">Next</button>
+    </div>
+  </div>
+
+  <!-- Line 2 -->
+  <div class="line2">
+    <span class="muted">Historic</span>
+    <span class="muted">Low / Med / High</span>
+    <span class="dot">•</span>
+    <span class="strong" id="prevLow">—</span>
+    <span class="muted">/</span>
+    <span class="strong" id="prevMed">—</span>
+    <span class="muted">/</span>
+    <span class="strong" id="prevHigh">—</span>
+  </div>
+</header>
 
         <!-- Previous stats -->
         <section class="section">

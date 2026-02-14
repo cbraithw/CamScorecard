@@ -43,6 +43,11 @@ function setHoleNumber(n) {
   $("holeNumber").textContent = String(n);
 }
 
+function clamp(n, min, max) {
+  if (!Number.isFinite(n)) return min;
+  return Math.max(min, Math.min(max, n));
+}
+
 function computeRoundTotals() {
   let total = 0;
   let totalPar = 0;
@@ -51,12 +56,14 @@ function computeRoundTotals() {
     totalPar += hole.par;
     const raw = localStorage.getItem(keyForHole(hole.n));
     if (!raw) continue;
+
     try {
       const data = JSON.parse(raw);
       const s = Number(data.score);
       if (Number.isFinite(s) && s > 0) total += s;
     } catch {}
   }
+
   return { total, totalPar, toPar: total - totalPar };
 }
 
@@ -96,26 +103,20 @@ function setReadonlyMeta(hole) {
 function setPreviousStats(holeNumber) {
   const scores = course.historyByHole[holeNumber] || [];
   if (!scores.length) {
-    for (const id of ["prevLow", "prevMed", "prevHigh", "prevLow2", "prevMed2", "prevHigh2"]) {
-      const el = $(id);
-      if (el) el.textContent = "—";
-    }
+    $("prevLow").textContent = "—";
+    $("prevMed").textContent = "—";
+    $("prevHigh").textContent = "—";
     return;
   }
 
   const low = Math.min(...scores);
   const med = median(scores);
   const high = Math.max(...scores);
-
   const medText = med == null ? "—" : Number.isInteger(med) ? String(med) : med.toFixed(1);
 
   $("prevLow").textContent = String(low);
   $("prevMed").textContent = medText;
   $("prevHigh").textContent = String(high);
-
-  $("prevLow2").textContent = String(low);
-  $("prevMed2").textContent = medText;
-  $("prevHigh2").textContent = String(high);
 }
 
 function setRoundSummary() {
@@ -161,11 +162,6 @@ function defaultsForHole(holePar) {
   };
 }
 
-function clamp(n, min, max) {
-  if (!Number.isFinite(n)) return min;
-  return Math.max(min, Math.min(max, n));
-}
-
 /** Pills (segmented buttons) **/
 function setPillActive(group, value) {
   const buttons = document.querySelectorAll(`.pillBtn[data-seg="${group}"]`);
@@ -177,7 +173,6 @@ function getPillValue(group) {
 }
 
 function ensureDefaultPills() {
-  // Ensure defaults exist if nothing active yet
   if (getPillValue("scrambling") == null) setPillActive("scrambling", "none");
   if (getPillValue("fairway") == null) setPillActive("fairway", "");
 }
@@ -217,7 +212,6 @@ function writeFormState(state) {
   $("putts").value = String(state.putts);
   $("penalties").value = String(state.penalties);
 
-  // Fairway pills + hidden input
   const fairway = state.fairway ?? "";
   if ($("fairway")) $("fairway").value = fairway;
   setPillActive("fairway", fairway);
@@ -271,12 +265,10 @@ function loadHole(n) {
     } catch {}
   }
 
-  // Ensure numeric defaults if missing
   state.score = Number.isFinite(Number(state.score)) ? Number(state.score) : hole.par;
   state.putts = Number.isFinite(Number(state.putts)) ? Number(state.putts) : 2;
   state.penalties = Number.isFinite(Number(state.penalties)) ? Number(state.penalties) : 0;
 
-  // Near GIR default logic if user hasn't touched it yet
   if (!state.nearGirTouched) {
     state.nearGir = computeNearGirSuggestion(hole.par, state.score, state.putts);
   }
@@ -343,41 +335,34 @@ function onPillClick(e) {
   const value = btn.dataset.value;
 
   setPillActive(group, value);
-
-  // keep hidden fairway input in sync
   if (group === "fairway" && $("fairway")) $("fairway").value = value;
 }
 
 window.addEventListener("load", () => {
-  // If you're versioning sw.js URL, keep your current line here.
-  // Example: navigator.serviceWorker.register("./sw.js?v=2").catch(() => {});
+  // keep your SW versioning here
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js?v=3").catch(() => {});
+    navigator.serviceWorker.register("./sw.js?v=2").catch(() => {});
   }
 
-  // Stepper (+/-)
   document.addEventListener("click", onStepperClick);
-
-  // Pill buttons
   document.addEventListener("click", onPillClick);
 
-  // Mark Near GIR as "touched" if user manually changes it
   $("nearGir").addEventListener("change", () => {
     window.__nearGirTouched = true;
   });
 
-  // If score/putts edited manually (keyboard), update derived rule + hint
   $("score").addEventListener("input", updateDerived);
   $("putts").addEventListener("input", updateDerived);
 
   $("saveBtn").addEventListener("click", saveHole);
 
-  // Two "Next" buttons now (top + sticky)
+  // Next buttons (top + sticky)
   $("nextHoleBtn")?.addEventListener("click", nextHole);
   $("nextHoleBtn2")?.addEventListener("click", nextHole);
 
-  // New "Prev" button (sticky)
+  // Prev buttons (top + sticky)
   $("prevHoleBtn")?.addEventListener("click", prevHole);
+  $("prevHoleBtnTop")?.addEventListener("click", prevHole);
 
   loadHole(getHoleNumber());
 });

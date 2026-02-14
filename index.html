@@ -7,81 +7,59 @@
 
     <link rel="manifest" href="manifest.webmanifest" />
     <meta name="theme-color" content="#111111" />
-
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
     <div class="container">
       <main class="card">
-        <!-- Top: hole meta + round summary -->
-<header class="topCompact">
-  <!-- Line 1 -->
-  <div class="line1">
-    <div class="leftLine">
-      <span class="kicker">Hole</span>
-      <span class="strong" id="holeNumber">1</span>
 
-      <span class="dot">•</span>
-      <span class="muted">Par</span> <span class="strong" id="parValue">4</span>
+        <!-- Compact header (matches your sketch) -->
+        <header class="scoreboard">
+          <!-- Row 1 -->
+          <div class="sb-row sb-row1">
+            <button id="prevHoleBtnTop" class="navBtn">Prev</button>
 
-      <span class="dot">•</span>
-      <span class="strong" id="yardsValue">410</span><span class="muted">y</span>
-
-      <span class="dot">•</span>
-      <span class="muted">Hcp</span><span class="strong" id="hcpValue">7</span>
-
-      <span class="dot">•</span>
-      <span class="muted">Hole</span>
-      <span class="scorePill" id="holeToParPill">E</span>
-    </div>
-
-    <div class="rightLine">
-      <div class="roundInline">
-        <span class="muted">Score</span>
-        <span class="strong" id="roundTotal">71</span>
-        <span class="roundToParInline" id="roundToPar">(+14)</span>
-      </div>
-      <button id="nextHoleBtn" class="btn">Next</button>
-    </div>
-  </div>
-
-  <!-- Line 2 -->
-  <div class="line2">
-    <span class="muted">Historic</span>
-    <span class="muted">Low / Med / High</span>
-    <span class="dot">•</span>
-    <span class="strong" id="prevLow">—</span>
-    <span class="muted">/</span>
-    <span class="strong" id="prevMed">—</span>
-    <span class="muted">/</span>
-    <span class="strong" id="prevHigh">—</span>
-  </div>
-</header>
-
-        <!-- Previous stats -->
-        <section class="section">
-          <div class="sectionTitle">Previous rounds</div>
-          <div class="statsRow">
-            <div class="stat">
-              <div class="label">Lowest</div>
-              <div class="val" id="prevLow2">—</div>
+            <div class="holeMeta">
+              <span class="muted">Hole</span> <b id="holeNumber">1</b>
+              <span class="dot">•</span>
+              <span>Par <b id="parValue">4</b></span>
+              <span class="dot">•</span>
+              <span><b id="yardsValue">410</b><span class="muted">y</span></span>
+              <span class="dot">•</span>
+              <span>Hcp <b id="hcpValue">7</b></span>
             </div>
-            <div class="stat">
-              <div class="label">Median</div>
-              <div class="val" id="prevMed2">—</div>
-            </div>
-            <div class="stat">
-              <div class="label">Highest</div>
-              <div class="val" id="prevHigh2">—</div>
+
+            <div class="roundBox">
+              <div class="roundScore">
+                <span class="roundTotal" id="roundTotal">71</span>
+                <span class="roundToPar" id="roundToPar">(+14)</span>
+              </div>
+              <button id="nextHoleBtn" class="navBtn">Next</button>
             </div>
           </div>
-        </section>
+
+          <!-- Row 2 -->
+          <div class="sb-row sb-row2">
+            <span class="historicLabel">Historic:</span>
+            <span class="historicValues">
+              <b id="prevLow">—</b>
+              <span class="muted">/</span>
+              <b id="prevMed">—</b>
+              <span class="muted">/</span>
+              <b id="prevHigh">—</b>
+              <span class="historicSub muted">low &nbsp;&nbsp; med &nbsp;&nbsp; high</span>
+            </span>
+
+            <div class="holePillWrap">
+              <span class="muted">Hole</span>
+              <span class="holeToParPill" id="holeToParPill">E</span>
+            </div>
+          </div>
+        </header>
 
         <!-- Main inputs -->
         <section class="section">
-          <div class="sectionTitle">This hole</div>
-
           <div class="grid">
             <!-- Score -->
             <div class="field">
@@ -120,11 +98,11 @@
               </div>
             </div>
 
-            <!-- Fairway (pill buttons) -->
+            <!-- Fairway (compact pills) -->
             <div class="field">
               <div class="labelRow">
                 <div class="label">Fairway</div>
-                <div class="hint">Optional</div>
+                <div class="hint">optional</div>
               </div>
               <div class="pills" role="group" aria-label="Fairway">
                 <button class="pillBtn" data-seg="fairway" data-value="">—</button>
@@ -134,8 +112,6 @@
                 <button class="pillBtn" data-seg="fairway" data-value="short">Short</button>
                 <button class="pillBtn" data-seg="fairway" data-value="long">Long</button>
               </div>
-
-              <!-- kept for storage compatibility; JS can sync it -->
               <input id="fairway" type="hidden" value="" />
             </div>
 
@@ -143,7 +119,7 @@
             <div class="field fieldWide">
               <div class="labelRow">
                 <div class="label">Checks</div>
-                <div class="hint">Near GIR auto-defaults unless you touch it</div>
+                <div class="hint">Near GIR auto until touched</div>
               </div>
 
               <div class="checkPanel">
@@ -164,7 +140,7 @@
               </div>
             </div>
 
-            <!-- Scrambling (mutually exclusive pill buttons) -->
+            <!-- Scrambling -->
             <div class="field fieldWide">
               <div class="labelRow">
                 <div class="label">Scrambling</div>
@@ -187,45 +163,45 @@
             <div class="field">
               <div class="labelRow"><div class="label">Driver</div></div>
               <div class="stepper">
-                <button class="stepBtn" data-stepper="lostDriver" data-delta="-1" aria-label="Decrease driver lost">−</button>
+                <button class="stepBtn" data-stepper="lostDriver" data-delta="-1">−</button>
                 <input id="lostDriver" class="stepInput" type="number" inputmode="numeric" min="0" max="10" />
-                <button class="stepBtn" data-stepper="lostDriver" data-delta="1" aria-label="Increase driver lost">+</button>
+                <button class="stepBtn" data-stepper="lostDriver" data-delta="1">+</button>
               </div>
             </div>
 
             <div class="field">
               <div class="labelRow"><div class="label">Irons</div></div>
               <div class="stepper">
-                <button class="stepBtn" data-stepper="lostIrons" data-delta="-1" aria-label="Decrease irons lost">−</button>
+                <button class="stepBtn" data-stepper="lostIrons" data-delta="-1">−</button>
                 <input id="lostIrons" class="stepInput" type="number" inputmode="numeric" min="0" max="10" />
-                <button class="stepBtn" data-stepper="lostIrons" data-delta="1" aria-label="Increase irons lost">+</button>
+                <button class="stepBtn" data-stepper="lostIrons" data-delta="1">+</button>
               </div>
             </div>
 
             <div class="field">
               <div class="labelRow"><div class="label">Chipping</div></div>
               <div class="stepper">
-                <button class="stepBtn" data-stepper="lostChipping" data-delta="-1" aria-label="Decrease chipping lost">−</button>
+                <button class="stepBtn" data-stepper="lostChipping" data-delta="-1">−</button>
                 <input id="lostChipping" class="stepInput" type="number" inputmode="numeric" min="0" max="10" />
-                <button class="stepBtn" data-stepper="lostChipping" data-delta="1" aria-label="Increase chipping lost">+</button>
+                <button class="stepBtn" data-stepper="lostChipping" data-delta="1">+</button>
               </div>
             </div>
 
             <div class="field">
               <div class="labelRow"><div class="label">Bunkers</div></div>
               <div class="stepper">
-                <button class="stepBtn" data-stepper="lostBunkers" data-delta="-1" aria-label="Decrease bunkers lost">−</button>
+                <button class="stepBtn" data-stepper="lostBunkers" data-delta="-1">−</button>
                 <input id="lostBunkers" class="stepInput" type="number" inputmode="numeric" min="0" max="10" />
-                <button class="stepBtn" data-stepper="lostBunkers" data-delta="1" aria-label="Increase bunkers lost">+</button>
+                <button class="stepBtn" data-stepper="lostBunkers" data-delta="1">+</button>
               </div>
             </div>
 
             <div class="field">
               <div class="labelRow"><div class="label">Putting</div></div>
               <div class="stepper">
-                <button class="stepBtn" data-stepper="lostPutting" data-delta="-1" aria-label="Decrease putting lost">−</button>
+                <button class="stepBtn" data-stepper="lostPutting" data-delta="-1">−</button>
                 <input id="lostPutting" class="stepInput" type="number" inputmode="numeric" min="0" max="10" />
-                <button class="stepBtn" data-stepper="lostPutting" data-delta="1" aria-label="Increase putting lost">+</button>
+                <button class="stepBtn" data-stepper="lostPutting" data-delta="1">+</button>
               </div>
             </div>
           </div>
@@ -237,8 +213,8 @@
     <div class="stickyBar">
       <div class="stickyInner">
         <button id="saveBtn" class="btn primary">Save</button>
-        <button id="prevHoleBtn" class="btn" title="Previous hole">Prev</button>
-        <button id="nextHoleBtn2" class="btn" title="Next hole">Next</button>
+        <button id="prevHoleBtn" class="btn">Prev</button>
+        <button id="nextHoleBtn2" class="btn">Next</button>
         <div class="status" id="status"></div>
       </div>
     </div>
